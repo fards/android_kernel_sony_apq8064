@@ -2064,10 +2064,9 @@ EXPORT_SYMBOL_GPL(cpufreq_unregister_driver);
 static int __init cpufreq_core_init(void)
 {
 	int cpu;
-	
-	#ifdef CONFIG_CPU_VOLTAGE_TABLE
-		int rc;
-	#endif	/* CONFIG_CPU_VOLTAGE_TABLE */
+#ifdef CONFIG_CPU_VOLTAGE_TABLE
+	int rc;
+#endif	/* CONFIG_CPU_VOLTAGE_TABLE */
 
 	if (cpufreq_disabled())
 		return -ENODEV;
@@ -2080,9 +2079,10 @@ static int __init cpufreq_core_init(void)
 	cpufreq_global_kobject = kobject_create_and_add("cpufreq", &cpu_subsys.dev_root->kobj);
 	BUG_ON(!cpufreq_global_kobject);
 	register_syscore_ops(&cpufreq_syscore_ops);
-	#ifdef CONFIG_CPU_VOLTAGE_TABLE
-		rc = sysfs_create_group(cpufreq_global_kobject, &vddtbl_attr_group);
-	#endif	/* CONFIG_CPU_VOLTAGE_TABLE */
+#ifdef CONFIG_CPU_VOLTAGE_TABLE
+	rc = sysfs_create_group(cpufreq_global_kobject, &vddtbl_attr_group);
+#endif	/* CONFIG_CPU_VOLTAGE_TABLE */
+
 	return 0;
 }
 core_initcall(cpufreq_core_init);

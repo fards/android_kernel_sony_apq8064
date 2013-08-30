@@ -383,7 +383,7 @@ static struct ion_cp_heap_pdata cp_mm_apq8064_ion_pdata = {
 	.reusable = FMEM_ENABLED,
 	.mem_is_fmem = FMEM_ENABLED,
 	.fixed_position = FIXED_MIDDLE,
-	.is_cma = 0,
+	.is_cma = 1,
 	.no_nonsecure_alloc = 1,
 };
 
@@ -3126,13 +3126,14 @@ static struct mdm_vddmin_resource mdm_vddmin_rscs = {
 
 static struct gpiomux_setting mdm2ap_status_gpio_run_cfg = {
 	.func = GPIOMUX_FUNC_GPIO,
-	.drv = GPIOMUX_DRV_2MA,
+	.drv = GPIOMUX_DRV_8MA,
 	.pull = GPIOMUX_PULL_NONE,
 };
 
 static struct mdm_platform_data amdm_platform_data = {
 	.mdm_version = "3.0",
 	.ramdump_delay_ms = 2000,
+	.early_power_on = 1,
 	.sfr_query = 1,
 	.send_shdn = 1,
 	.vddmin_resource = &mdm_vddmin_rscs,
@@ -3159,10 +3160,10 @@ static struct platform_device msm_tsens_device = {
 
 static struct msm_thermal_data msm_thermal_pdata = {
 	.sensor_id = 7,
-	.poll_ms = 1000,
-	.limit_temp_degC = 110,
-	.temp_hysteresis_degC = 5,
-	.freq_step = 1,
+	.poll_ms = 250,
+	.limit_temp_degC = 70,
+	.temp_hysteresis_degC = 10,
+	.freq_step = 2,
 	.core_limit_temp_degC = 80,
 	.core_temp_hysteresis_degC = 10,
 	.core_control_mask = 0xe,

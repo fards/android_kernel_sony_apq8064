@@ -234,8 +234,8 @@ static struct msm_panel_common_pdata mdp_pdata = {
 	.gpio = MDP_VSYNC_GPIO,
 	.mdp_max_clk = 266667000,
 	.mdp_max_bw = 2000000000,
-	.mdp_bw_ab_factor = 200,
-	.mdp_bw_ib_factor = 210,
+	.mdp_bw_ab_factor = 115,
+	.mdp_bw_ib_factor = 205,
 	.mdp_bus_scale_table = &mdp_bus_scale_pdata,
 	.mdp_rev = MDP_REV_44,
 #ifdef CONFIG_MSM_MULTIMEDIA_USE_ION
@@ -440,7 +440,7 @@ static int mipi_dsi_panel_plf_power(int on)
 								__func__, rc);
 			goto exit;
 		}
-		usleep_range(25000, 26000);
+		msleep(201);				/* Spec says > 200 ms */
 
 		rc = regulator_set_optimum_mode(reg_l2, 135000);
 		if (rc < 0) {
@@ -456,7 +456,7 @@ static int mipi_dsi_panel_plf_power(int on)
 							/* Enable VSP/VSN */
 		gpio_set_value_cansleep(lcd_dcdc_en_gpio, 1);
 		mipi_dsi_panel_plf_reset(0);		/* Reset LOW */
-		usleep_range(25000, 26000);
+		msleep(51);				/* Spec says > 50 ms */
 		mipi_dsi_panel_plf_reset(1);		/* Reset HIGH */
 		usleep_range(11000, 12000);		/* Spec says > 10 ms */
 	} else {
@@ -465,7 +465,7 @@ static int mipi_dsi_panel_plf_power(int on)
 		usleep_range(11000, 12000);		/* Spec says > 10 ms */
 							/* Disable VSP/VSN */
 		gpio_set_value_cansleep(lcd_dcdc_en_gpio, 0);
-		usleep_range(25000, 26000);
+		msleep(51);				/* Spec says > 50 ms) */
 		rc = regulator_disable(reg_l2);		/* Disable dsi-vdda */
 		if (rc)
 			pr_err("%s: disable l2 failed, rc=%d\n", __func__, rc);

@@ -44,6 +44,15 @@
 #define PRI_SRC_SEL_HFPLL	1
 #define PRI_SRC_SEL_HFPLL_DIV2	2
 
+/* PTE EFUSE register offset. */
+#define PTE_EFUSE		0xC0
+
+#ifdef CONFIG_OC_ULTIMATE
+#define FREQ_TABLE_SIZE		38
+#else
+#define FREQ_TABLE_SIZE		35
+#endif
+
 #define SECCLKAGD		BIT(4)
 
 static DEFINE_MUTEX(driver_lock);
@@ -971,8 +980,8 @@ void acpuclk_set_vdd(unsigned int khz, int vdd_uv) {
 	pr_warn("faux123: user voltage table modified!\n");
 	mutex_unlock(&driver_lock);
 }
-
 #endif	/* CONFIG_CPU_VOTALGE_TABLE */
+
 #ifdef CONFIG_CPU_FREQ_MSM
 static struct cpufreq_frequency_table freq_table[NR_CPUS][FREQ_TABLE_SIZE];
 

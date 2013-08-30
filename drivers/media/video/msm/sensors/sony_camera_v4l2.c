@@ -291,6 +291,7 @@ static int sony_cam_i2c_write(struct msm_sensor_ctrl_t *s_ctrl,
 	uint16_t len, uint8_t *data)
 {
 	int rc;
+	uint16_t i;
 	uint16_t id = sony_util_get_context(s_ctrl);
 
 	struct i2c_msg msgs[] = {
@@ -622,7 +623,7 @@ static int32_t sony_sensor_set_fps(struct msm_sensor_ctrl_t *s_ctrl,
 }
 
 static int32_t sony_sensor_write_exp_gain1(struct msm_sensor_ctrl_t *s_ctrl,
-		uint16_t gain, uint32_t line)
+	        uint16_t gain, uint32_t line, int32_t luma_avg, uint16_t fgain)
 {
 	return 0;
 }
